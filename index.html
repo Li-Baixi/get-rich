@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>美股技术指标图鉴 · Get Rich</title>
+<meta name="description" content="MA EMA SAR BOLL 神奇九转 MACD DMI RSI KDJ CCI WMSR VOL OBV PSY ATR 图解与多指标共振买卖策略">
+<meta name="theme-color" content="#0d0d0d" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f2f2f0" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="指标图鉴">
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<script>
+(function(){try{var t=localStorage.getItem('gr-theme');if(!t)t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;}catch(e){}})();
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+:root{--tab-h:58px}
+[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0d0d0d; --card:#1a1a19; --card2:#232322; --ink:#f0efec; --ink2:#c3c2b7; --mut:#898781;
+  --grid:#2c2c2a; --axis:#383835; --hair:rgba(255,255,255,.10); --hair2:rgba(255,255,255,.06);
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500;
+  --up:#e66767; --dn:#199e70; --tint:#3987e5; --tintbg:rgba(57,135,229,.16);
+  --glass:rgba(20,20,19,.72); --shadow:0 10px 30px rgba(0,0,0,.45);
+  --upbg:rgba(230,103,103,.14); --dnbg:rgba(25,158,112,.14);
+}
+[data-theme="light"]{
+  color-scheme:light;
+  --bg:#f2f2f0; --card:#fcfcfb; --card2:#f4f4f2; --ink:#0b0b0b; --ink2:#52514e; --mut:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --hair:rgba(11,11,11,.12); --hair2:rgba(11,11,11,.06);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100;
+  --up:#e34948; --dn:#008300; --tint:#2a78d6; --tintbg:rgba(42,120,214,.12);
+  --glass:rgba(252,252,251,.72); --shadow:0 8px 24px rgba(20,20,18,.10);
+  --upbg:rgba(227,73,72,.10); --dnbg:rgba(0,131,0,.10);
+}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","PingFang SC","Helvetica Neue","Microsoft YaHei",system-ui,sans-serif;
+  font-size:15px; line-height:1.65; padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom) + 24px);
+  -webkit-font-smoothing:antialiased; overscroll-behavior-y:none;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+/* ---------- 顶栏 ---------- */
+header.top{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  padding:calc(env(safe-area-inset-top) + 10px) 16px 10px;
+  background:var(--glass); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--hair2);
+}
+header.top .brand{display:flex; align-items:center; gap:10px; min-width:0}
+header.top .logo{width:30px;height:30px;border-radius:8px;flex:none;background:linear-gradient(160deg,#1c1c1b,#2c2c2a);display:flex;align-items:center;justify-content:center;border:1px solid var(--hair)}
+header.top .logo svg{width:18px;height:18px}
+header.top h1{font-size:17px; font-weight:700; letter-spacing:.2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+header.top h1 small{font-size:11px; font-weight:500; color:var(--mut); margin-left:6px}
+#themeBtn{
+  width:36px;height:36px;flex:none;border-radius:50%;border:1px solid var(--hair);
+  background:var(--card); color:var(--ink2); font-size:17px; cursor:pointer;
+  display:flex;align-items:center;justify-content:center; transition:transform .15s;
+}
+#themeBtn:active{transform:scale(.92)}
+/* ---------- 布局 ---------- */
+main{max-width:860px; margin:0 auto; padding:14px 14px 30px}
+section.tab{display:none; animation:fadeIn .28s ease}
+section.tab.on{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.card{
+  background:var(--card); border:1px solid var(--hair2); border-radius:20px;
+  padding:16px; margin:14px 0; box-shadow:var(--shadow);
+}
+h2.sec{font-size:24px; font-weight:800; margin:18px 2px 2px; letter-spacing:.2px}
+p.sub{color:var(--ink2); font-size:13.5px; margin:2px 2px 8px}
+h4{font-size:13px; font-weight:700; color:var(--ink2); margin-bottom:6px; letter-spacing:.4px}
+/* ---------- 英雄卡 ---------- */
+.hero{background:linear-gradient(150deg,var(--card),var(--card2));}
+.hero h2{font-size:26px; font-weight:800; line-height:1.35}
+.hero .tags{display:flex; flex-wrap:wrap; gap:6px; margin-top:10px}
+.tag{font-size:11px; padding:3px 9px; border-radius:99px; background:var(--tintbg); color:var(--tint); font-weight:600}
+.tag.g{background:var(--upbg); color:var(--up)}
+.tag.d{background:var(--dnbg); color:var(--dn)}
+.hero p{color:var(--ink2); font-size:13.5px; margin-top:10px}
+/* ---------- 分段控件 ---------- */
+.seg{
+  display:flex; gap:4px; background:var(--card2); border:1px solid var(--hair2);
+  border-radius:14px; padding:3px; margin:12px 0; overflow-x:auto; scrollbar-width:none;
+}
+.seg::-webkit-scrollbar{display:none}
+.seg button{
+  flex:1; border:0; background:transparent; color:var(--ink2); font-size:13px; font-weight:600;
+  padding:7px 10px; border-radius:11px; cursor:pointer; white-space:nowrap; font-family:inherit;
+}
+.seg button.on{background:var(--card); color:var(--ink); box-shadow:0 2px 8px rgba(0,0,0,.18)}
+/* ---------- 指标卡 ---------- */
+.ind{scroll-margin-top:70px}
+.ind.hidden{display:none}
+.ind-h{display:flex; flex-wrap:wrap; align-items:baseline; gap:8px; margin-bottom:4px}
+.ind-h h3{font-size:19px; font-weight:800}
+.ind-h h3 span{font-size:13px; color:var(--ink2); font-weight:600; margin-left:6px}
+.chips{display:flex; flex-wrap:wrap; gap:6px; margin:6px 0 10px}
+.chip{font-size:11px; padding:2px 9px; border-radius:99px; border:1px solid var(--hair); color:var(--mut)}
+.chip.cat{color:var(--tint); border-color:var(--tint); opacity:.9}
+.human{font-size:14px; margin:4px 0 10px; color:var(--ink)}
+.human b{color:var(--up)}
+.human i{font-style:normal; color:var(--dn)}
+.grid2{display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px}
+@media(min-width:700px){.grid2{grid-template-columns:1fr 1fr}}
+.grid2 ul{list-style:none}
+.grid2 li{font-size:13px; color:var(--ink2); padding:3px 0 3px 16px; position:relative}
+.grid2 li::before{content:""; position:absolute; left:2px; top:11px; width:5px; height:5px; border-radius:50%; background:var(--tint)}
+.grid2 p{font-size:13px; color:var(--ink2)}
+.grid2 li b,.grid2 p b{color:var(--ink); font-weight:650}
+.kv{font-size:12px; color:var(--mut); margin-top:2px}
+/* ---------- 图表 ---------- */
+.chart{position:relative; margin:8px -4px 0; outline:none}
+.chart:focus-visible{outline:2px solid var(--tint); outline-offset:2px; border-radius:12px}
+.chart svg{display:block; width:100%; height:auto; touch-action:pan-y}
+.legend{display:flex; flex-wrap:wrap; gap:5px 12px; margin:6px 2px 0}
+.legend .lg{display:flex; align-items:center; gap:5px; font-size:11.5px; color:var(--ink2)}
+.legend .lg i{width:14px; height:3px; border-radius:2px; background:var(--s1)}
+.legend .lg.sw i{width:10px; height:10px; border-radius:3px}
+.tt{
+  position:absolute; z-index:5; display:none; pointer-events:none; min-width:150px;
+  background:var(--glass); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--hair); border-radius:12px; padding:8px 11px;
+  font-size:12px; color:var(--ink2); box-shadow:var(--shadow); font-variant-numeric:tabular-nums;
+}
+.tt .d{font-weight:700; color:var(--ink); margin-bottom:3px}
+.tt .row{display:flex; align-items:center; gap:6px; white-space:nowrap; padding:1px 0}
+.tt .row i{width:10px; height:3px; border-radius:2px; flex:none}
+.tt .row b{color:var(--ink); font-weight:650; margin-left:auto; padding-left:12px}
+details.tbl{margin-top:10px}
+details.tbl summary{
+  cursor:pointer; font-size:12.5px; color:var(--tint); font-weight:600;
+  list-style:none; padding:6px 0; user-select:none;
+}
+details.tbl summary::-webkit-details-marker{display:none}
+.tblwrap{overflow-x:auto; border:1px solid var(--hair2); border-radius:12px; margin-top:4px}
+.tblwrap table{border-collapse:collapse; width:100%; font-size:11.5px; font-variant-numeric:tabular-nums}
+.tblwrap th,.tblwrap td{padding:5px 8px; text-align:right; white-space:nowrap; border-bottom:1px solid var(--hair2)}
+.tblwrap th{color:var(--mut); font-weight:600; position:sticky; top:0; background:var(--card)}
+.tblwrap td:first-child,.tblwrap th:first-child{text-align:left}
+/* ---------- 流程图 ---------- */
+.flow{display:flex; flex-direction:column; gap:0; margin:10px 0}
+.step{display:flex; gap:12px; align-items:flex-start}
+.step .no{
+  flex:none; width:28px; height:28px; border-radius:50%; margin-top:2px;
+  background:var(--tintbg); color:var(--tint); font-weight:800; font-size:13px;
+  display:flex; align-items:center; justify-content:center;
+}
+.step .bd{flex:1; padding-bottom:16px; border-left:1.5px solid var(--grid); margin-left:-14px; padding-left:26px; min-height:20px}
+.step:last-child .bd{border-left-color:transparent}
+.step .bd b{font-size:14px}
+.step .bd p{font-size:12.5px; color:var(--ink2); margin-top:2px}
+/* ---------- 信号块 ---------- */
+.sig{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin:10px 0}
+@media(max-width:520px){.sig{grid-template-columns:1fr}}
+.sig .box{border-radius:14px; padding:10px 12px; border:1px solid var(--hair2)}
+.sig .box b{font-size:12.5px; display:block; margin-bottom:4px}
+.sig .box.long{background:var(--upbg)} .sig .box.long b{color:var(--up)}
+.sig .box.short{background:var(--dnbg)} .sig .box.short b{color:var(--dn)}
+.sig .box p{font-size:12.5px; color:var(--ink2)}
+.rule{border:1px dashed var(--axis); border-radius:14px; padding:10px 12px; margin:10px 0; font-size:13px; color:var(--ink2)}
+.rule b{color:var(--ink)}
+/* ---------- 计分器 ---------- */
+.srow{display:flex; align-items:center; gap:8px; padding:9px 0; border-bottom:1px solid var(--hair2)}
+.srow:last-of-type{border-bottom:0}
+.srow .txt{flex:1; min-width:0}
+.srow .txt .n{font-size:13.5px; font-weight:600}
+.srow .txt .w{font-size:11px; color:var(--mut)}
+.pbtns{display:flex; gap:6px; flex:none}
+.pb{
+  width:46px; height:30px; border-radius:9px; border:1px solid var(--hair);
+  background:transparent; color:var(--mut); font-size:12px; font-weight:700; cursor:pointer; font-family:inherit;
+}
+.pb.l.on{background:var(--upbg); border-color:var(--up); color:var(--up)}
+.pb.s.on{background:var(--dnbg); border-color:var(--dn); color:var(--dn)}
+#scoreBar{height:14px; border-radius:99px; background:var(--card2); border:1px solid var(--hair2); position:relative; overflow:hidden; margin:12px 0 4px}
+#scoreFill{position:absolute; top:2px; bottom:2px; border-radius:99px; transition:all .35s; background:var(--grid)}
+#scoreFill.pos{background:var(--up)} #scoreFill.neg{background:var(--dn)}
+#scoreNum{font-size:34px; font-weight:800; letter-spacing:-.5px}
+#scoreVerdict{font-size:15px; font-weight:700; margin-top:2px}
+#scoreActs{list-style:none; margin-top:8px}
+#scoreActs li{font-size:13px; color:var(--ink2); padding:3px 0 3px 18px; position:relative}
+#scoreActs li::before{content:"›"; position:absolute; left:4px; color:var(--tint); font-weight:800}
+/* ---------- 计算器 ---------- */
+.inp-row{display:flex; align-items:center; gap:10px; padding:9px 0; border-bottom:1px solid var(--hair2)}
+.inp-row label{flex:1; font-size:13.5px}
+.inp-row input{
+  width:118px; padding:8px 10px; border-radius:10px; border:1px solid var(--hair);
+  background:var(--card2); color:var(--ink); font-size:15px; font-weight:600; text-align:right;
+  font-family:inherit; font-variant-numeric:tabular-nums;
+}
+.inp-row input:focus{outline:2px solid var(--tint); outline-offset:0}
+.tiles{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:12px}
+.tile{background:var(--card2); border-radius:14px; padding:10px 12px}
+.tile .l{font-size:11.5px; color:var(--mut)}
+.tile .v{font-size:19px; font-weight:750; margin-top:2px; font-variant-numeric:tabular-nums}
+.tile .v small{font-size:11.5px; color:var(--mut); font-weight:500}
+.tile.hl{background:var(--tintbg)} .tile.hl .v{color:var(--tint)}
+/* ---------- 速查表 ---------- */
+.qtable{overflow-x:auto; border:1px solid var(--hair2); border-radius:14px}
+.qtable table{border-collapse:collapse; width:100%; font-size:12px}
+.qtable th,.qtable td{padding:8px 10px; text-align:left; border-bottom:1px solid var(--hair2); vertical-align:top}
+.qtable th{color:var(--mut); font-weight:700; background:var(--card2); white-space:nowrap; position:sticky; top:0}
+.qtable td b{color:var(--up)} .qtable td i{font-style:normal; color:var(--dn)}
+.qtable td{color:var(--ink2)}
+.qtable td:first-child{color:var(--ink); font-weight:700; white-space:nowrap}
+ol.disc{list-style:none; counter-reset:d}
+ol.disc li{counter-increment:d; padding:8px 0 8px 34px; position:relative; font-size:13.5px; color:var(--ink2); border-bottom:1px solid var(--hair2)}
+ol.disc li:last-child{border-bottom:0}
+ol.disc li::before{
+  content:counter(d); position:absolute; left:0; top:9px; width:22px; height:22px; border-radius:50%;
+  background:var(--tintbg); color:var(--tint); font-size:12px; font-weight:800;
+  display:flex; align-items:center; justify-content:center;
+}
+ol.disc li b{color:var(--ink)}
+/* ---------- 底部Tab ---------- */
+nav.tabs{
+  position:fixed; left:0; right:0; bottom:0; z-index:60;
+  display:flex; justify-content:space-around; align-items:stretch;
+  padding-bottom:env(safe-area-inset-bottom); height:calc(var(--tab-h) + env(safe-area-inset-bottom));
+  background:var(--glass); backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-top:1px solid var(--hair2);
+}
+nav.tabs button{
+  flex:1; border:0; background:transparent; color:var(--mut); cursor:pointer;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:3px;
+  font-size:10.5px; font-weight:600; font-family:inherit; transition:color .15s;
+}
+nav.tabs button svg{width:23px; height:23px; stroke:currentColor; fill:none; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+nav.tabs button.on{color:var(--tint)}
+nav.tabs button:active{transform:scale(.94)}
+footer{max-width:860px; margin:0 auto; padding:6px 16px 20px; text-align:center; font-size:11.5px; color:var(--mut); line-height:1.7}
+.warn{border:1px solid var(--hair); background:var(--card2); border-radius:14px; padding:12px 14px; font-size:12.5px; color:var(--ink2); margin:12px 0}
+.warn b{color:var(--ink)}
+h3.strat{font-size:17px; font-weight:800; margin:16px 0 4px}
+h3.strat span{font-size:11.5px; font-weight:700; padding:2px 8px; border-radius:99px; vertical-align:2px; margin-left:8px}
+h3.strat .L{background:var(--upbg); color:var(--up)}
+h3.strat .S{background:var(--dnbg); color:var(--dn)}
+h3.strat .N{background:var(--tintbg); color:var(--tint)}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="brand">
+    <div class="logo"><svg viewBox="0 0 24 24" fill="none"><path d="M7 4v3M7 17v3M5 7h4v10H5zM17 2v4M17 18v4M15 6h4v12h-4z" stroke="#e66767" stroke-width="1.8"/><path d="M11 12h3l-1-2 1 2-1 2" stroke="#3987e5" stroke-width="1.6"/></svg></div>
+    <h1>美股技术指标图鉴<small>Get Rich</small></h1>
+  </div>
+  <button id="themeBtn" aria-label="切换深浅色主题">🌓</button>
+</header>
+
+<main>
+
+<!-- ============ Tab 1 图鉴 ============ -->
+<section class="tab" id="t-tj">
+  <div class="card hero">
+    <h2>15 个指标一次讲透<br>从"看不懂"到"联合判断"</h2>
+    <div class="tags">
+      <span class="tag">趋势 MA·EMA·SAR·MACD·DMI</span>
+      <span class="tag">超买超卖 RSI·KDJ·CCI·WMSR·PSY·九转</span>
+      <span class="tag">量能 VOL·OBV</span>
+      <span class="tag">波动 BOLL·ATR</span>
+    </div>
+    <p>每张图都由浏览器按真实公式实时计算绘制(K线为模拟数据)。红涨绿跌,阳线空心、阴线实心。图表支持触摸/鼠标十字线与键盘←→,每张图可展开数据表。</p>
+    <div class="warn" style="margin-bottom:0"><b>先记住一句话:</b>指标不预测未来,只描述"现在正在发生什么"。单一指标是噪声,跨类别共振才是信号——这正是「策略」页要讲的。</div>
+  </div>
+
+  <div class="seg" id="catSeg" role="tablist">
+    <button data-c="all" class="on">全部</button>
+    <button data-c="trend">趋势</button>
+    <button data-c="os">超买超卖</button>
+    <button data-c="vol">量能</button>
+    <button data-c="wv">波动通道</button>
+  </div>
+
+  <article class="card ind" data-cat="trend" id="i-ma">
+    <div class="ind-h"><h3>MA<span>移动平均线 Moving Average</span></h3></div>
+    <div class="chips"><span class="chip cat">趋势</span><span class="chip">常用 10 / 20 / 50 / 200</span></div>
+    <p class="human">把最近 N 天的收盘价取个平均,每天滚着算——<b>价格的平均成本线</b>。均线向上=多方掌控,价格站上均线=强势。</p>
+    <div class="chart" id="c-ma" tabindex="0" role="img" aria-label="K线与MA10 MA20 MA60示例图"></div>
+    <div class="legend" data-for="c-ma"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li><b>多头排列:</b>MA10&gt;MA20&gt;MA60 依次向上发散,回调就是买点</li>
+        <li><b>金叉/死叉:</b>短均线上穿长均线=转强;下穿=转弱</li>
+        <li><b>均线靠拢:</b>价格远离均线太多会"均线回归",别追</li>
+      </ul></div>
+      <div><h4>美股实战</h4><ul>
+        <li>美股机构最认 <b>SMA50 / SMA200</b>:50 上穿 200 叫"黄金交叉",跌破 200 常意味转熊</li>
+        <li>纳指/标普回踩 50 日线是经典低吸位</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>震荡市里均线反复缠绕,金叉死叉来回打脸;<b>滞后</b>是它的天性——确认趋势用 MA,抓拐点要靠别的指标。</p></div>
+      <div><h4>参数</h4><p class="kv">日线:10/20/60(A股习惯 5/10/20/60);美股加 50/200。周期越长越平滑也越慢。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="trend" id="i-ema">
+    <div class="ind-h"><h3>EMA<span>指数移动平均 Exponential MA</span></h3></div>
+    <div class="chips"><span class="chip cat">趋势</span><span class="chip">常用 12 / 21 / 26</span></div>
+    <p class="human">也是一种平均,但<b>越近的价格权重越大</b>——反应比 MA 快一拍。图里同样 20 日,EMA 明显更"贴"价格。</p>
+    <div class="chart" id="c-ema" tabindex="0" role="img" aria-label="EMA12 EMA26 与 SMA20 对比图"></div>
+    <div class="legend" data-for="c-ema"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>短趋势跟踪:<b>EMA21</b> 是波段客最爱的趋势线,回踩不破=趋势延续</li>
+        <li><b>EMA12 / EMA26</b> 就是 MACD 的原料(见 MACD 卡)</li>
+        <li>趋势陡峭时 EMA 是更好的移动止损参考</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>反应快=噪声也快,震荡市里 EMA 会被反复上穿下穿。它和 MA 没有绝对好坏:<b>MA 稳、EMA 灵</b>,看你要确认还是要及时。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="trend" id="i-sar">
+    <div class="ind-h"><h3>SAR<span>抛物线转向 Parabolic SAR</span></h3></div>
+    <div class="chips"><span class="chip cat">趋势</span><span class="chip">参数 0.02, 0.2</span></div>
+    <p class="human">价格下方的一串小圆点,像"移动止损位"。<b>点在价下=持有多头;点翻到价上=趋势转空</b>,翻转即离场/反手。</p>
+    <div class="chart" id="c-sar" tabindex="0" role="img" aria-label="SAR抛物线点与翻转示例"></div>
+    <div class="legend" data-for="c-sar"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>点位每天跟随行情<量程收紧</量程>——趋势越走越顺时,点追价格越贴,利润"锁定"越多</li>
+        <li>SAR 翻转 = 最机械的离场信号,执行力差的人的救星</li>
+      </ul></div>
+      <div><h4>原理</h4><p>加速因子 AF 从 0.02 起步,每创新高/新低 +0.02,封顶 0.2——所以点会"加速"追赶价格,形态像抛物线。</p></div>
+      <div><h4>失效场景</h4><p><b>只适合单边趋势市</b>。震荡市里 SAR 反复翻转,能把止损打成筛子。先用 ADX 确认趋势再信 SAR。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="wv" id="i-boll">
+    <div class="ind-h"><h3>BOLL<span>布林带 Bollinger Bands</span></h3></div>
+    <div class="chips"><span class="chip cat">波动率通道</span><span class="chip">参数 20, 2σ</span></div>
+    <p class="human">中轨=20日均线,上下轨=±2倍标准差,形成一个<b>会呼吸的价格通道</b>:波动小时收口,变盘临近;波动大时开口,趋势启动。</p>
+    <div class="chart" id="c-boll" tabindex="0" role="img" aria-label="布林带收口与开口突破示例"></div>
+    <div class="legend" data-for="c-boll"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li><b>收口(Squeeze)→ 开口:</b>极度收口后的大方向突破,是胜率最高的形态之一</li>
+        <li>震荡市:触下轨买、触上轨卖(均值回归)</li>
+        <li>趋势市:<b>沿上轨走=超强,别急着做空</b>"触上轨"本身</li>
+      </ul></div>
+      <div><h4>美股实战</h4><ul>
+        <li>财报/议息前 BOLL 常提前收口——市场在等方向</li>
+        <li>突破当根 K 线最好收在轨外,<b>且放量</b>(配合 VOL 卡)</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>单边暴力行情里价格能"贴轨"走很久,逆势摸轨会被碾过去。带宽(上下轨距离)本身就是波动率信息,可当过滤器用。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="os" id="i-td">
+    <div class="ind-h"><h3>神奇九转<span>TD Sequential · DeMark</span></h3></div>
+    <div class="chips"><span class="chip cat">反转计数</span><span class="chip">比较前4根收盘</span></div>
+    <p class="human">下跌途中,连续 <b>9 根收盘价都低于 4 根前的收盘</b>,数到"9"=下跌动能衰竭的警报(买入九转);上涨数到 9 则相反。图中的数字是实时计数。</p>
+    <div class="chart" id="c-td" tabindex="0" role="img" aria-label="神奇九转计数到9后反转示例"></div>
+    <div class="legend" data-for="c-td"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>9 出现<b>不是立刻买</b>,是"开始盯"——等阳线/KDJ金叉确认</li>
+        <li>加分项:第 8、9 根的低点低于第 6、7 根,衰竭更充分</li>
+        <li>九转后常有 4~8 根的反抽,吃这段"情绪修复"</li>
+      </ul></div>
+      <div><h4>本质</h4><p>它数的是"超卖还能超卖多久"——纯<b>逆势/反转</b>指标,与趋势指标(均线类)逻辑相反,必须配合支撑位使用。</p></div>
+      <div><h4>失效场景</h4><p>单边暴跌里能数到 13 甚至重启;强势趋势中"卖出9"后横盘几日继续涨。永远只当"时机提示",不当方向依据。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="trend" id="i-macd">
+    <div class="ind-h"><h3>MACD<span>指数平滑异同均线</span></h3></div>
+    <div class="chips"><span class="chip cat">趋势+动量</span><span class="chip">参数 12, 26, 9</span></div>
+    <p class="human">快慢两条 EMA 的差值:<b>DIF=EMA12−EMA26</b>,DEA 是 DIF 的平均,柱=DIF−DEA。<b>金叉买、死叉卖、零轴定多空、背离抓拐点</b>——一个指标四层信息。</p>
+    <div class="chart" id="c-macd" tabindex="0" role="img" aria-label="MACD金叉死叉与柱状图示例"></div>
+    <div class="legend" data-for="c-macd"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li><b>零轴上方金叉</b>=主升浪信号,含金量最高</li>
+        <li>零轴下方金叉=弱反弹,快进快出</li>
+        <li>柱子由放转缩=动能衰竭的最早预警</li>
+      </ul></div>
+      <div><h4>背离(最值钱)</h4><p>价格创新高而 DIF 不创新高=<b>顶背离</b>(涨不动了);价格新低 DIF 抬高=<b>底背离</b>(跌不动了)。详见策略页背离专题。</p></div>
+      <div><h4>失效场景</h4><p>震荡市零轴附近反复穿,信号密度高、质量差。周线 MACD 过滤日线信号,噪声少八成。美股跳空缺口会瞬间扭曲 EMA,财报日慎用。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="trend" id="i-dmi">
+    <div class="ind-h"><h3>DMI<span>趋向指标 (+DI / −DI / ADX)</span></h3></div>
+    <div class="chips"><span class="chip cat">趋势强度</span><span class="chip">参数 14</span></div>
+    <p class="human">+DI 是"多方今天的进攻幅度",−DI 是空方的;两者比较定方向。<b>ADX 不分多空,只量"趋势强不强"</b>——它是全页最关键的过滤器。</p>
+    <div class="chart" id="c-dmi" tabindex="0" role="img" aria-label="+DI -DI 与ADX示例"></div>
+    <div class="legend" data-for="c-dmi"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li><b>ADX&gt;25:</b>趋势市,信均线/SAR/MACD,逆势抄底=送钱</li>
+        <li><b>ADX&lt;20:</b>震荡市,改用 KDJ/RSI/BOLL 高抛低吸</li>
+        <li>+DI 上穿 −DI 且 ADX 走高=可信做多信号</li>
+      </ul></div>
+      <div><h4>为什么重要</h4><p>多数亏损不是方向错,是<b>在震荡市用了趋势策略</b>(或在趋势市抄底摸顶)。先看 ADX 再选武器,这一步能救掉大部分单子。</p></div>
+      <div><h4>失效场景</h4><p>ADX 是滞后平滑值,趋势启动初期还很低;缺口跳空会瞬间拉高 DI 差。把它当"路况"而非"方向盘"。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="os" id="i-rsi">
+    <div class="ind-h"><h3>RSI<span>相对强弱指数</span></h3></div>
+    <div class="chips"><span class="chip cat">动量·超买超卖</span><span class="chip">常用 14 · 短线 6</span></div>
+    <p class="human">最近 N 天里"涨的力气占涨跌总力气的比例",0~100。<b>&gt;70 超买、&lt;30 超卖、50 是多空分界</b>。强势股会在 40~80 区间反复走强,弱股在 20~60 徘徊。</p>
+    <div class="chart" id="c-rsi" tabindex="0" role="img" aria-label="RSI超卖与回升示例"></div>
+    <div class="legend" data-for="c-rsi"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>超卖区回升穿 30 = 抄底第一信号</li>
+        <li>RSI 回踩 50 不破再上 = 多头中继</li>
+        <li><b>背离是 RSI 的灵魂:</b>价新低 RSI 不新低=底背离</li>
+      </ul></div>
+      <div><h4>钝化</h4><p>单边强势中 RSI 可以贴着 80 走很久("超买还能涨");单边暴跌贴 20 很久。逆着 ADX&gt;30 的趋势做 RSI 超买/超卖,是新手第一大坑。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="os" id="i-kdj">
+    <div class="ind-h"><h3>KDJ<span>随机指标</span></h3></div>
+    <div class="chips"><span class="chip cat">超买超卖</span><span class="chip">参数 9, 3, 3</span></div>
+    <p class="human">收盘价在最近 9 天高低区间的位置(RSV)再两次平滑成 K、D,J=3K−2D 是放大镜。<b>低位金叉买、高位死叉卖</b>,最敏感也最吵的摆动指标。</p>
+    <div class="chart" id="c-kdj" tabindex="0" role="img" aria-label="KDJ低位金叉示例"></div>
+    <div class="legend" data-for="c-kdj"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>K、D&lt;20 后金叉=<b>低位金叉</b>,含金量高</li>
+        <li>&gt;80 后死叉=高位死叉,减仓信号</li>
+        <li>J&gt;100 情绪过热、J&lt;0 恐慌过度——只提示"极端",不单独当信号</li>
+      </ul></div>
+      <div><h4>和 WMSR 的关系</h4><p>KDJ 的原料 RSV 与威廉指标 W%R 同源(W%R=RSV−100),一个向上、一个向下。KDJ 平滑更稳,W%R 更快更糙。</p></div>
+      <div><h4>失效场景</h4><p>趋势市里 KDJ 长期钝化在超买区,死叉一次错一次。<b>先用 ADX/均线定方向,再在顺势方向用 KDJ 找点</b>。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="os" id="i-cci">
+    <div class="ind-h"><h3>CCI<span>顺势指标 Commodity Channel Index</span></h3></div>
+    <div class="chips"><span class="chip cat">超买超卖·突破</span><span class="chip">常用 14 / 20</span></div>
+    <p class="human">典型价格与均线的偏离除以平均绝对偏差——没有上下限的"偏离表"。<b>+100 以上=进入强势区,−100 以下=超卖区</b>,0 轴附近毫无信息。</p>
+    <div class="chart" id="c-cci" tabindex="0" role="img" aria-label="CCI下穿负100后回升示例"></div>
+    <div class="legend" data-for="c-cci"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>−100 下方<而>回升穿 −100=超卖回归买点</li>
+        <li>+100 上方=趋势强势确认,可持有不急止盈</li>
+        <li>CCI 从 0 轴快速拉起常配合突破行情</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>无界限意味着极端可以更极端(±200、±300)。它更适合当"强度计"配合趋势用,而不是孤立的超买卖卖。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="os" id="i-wmsr">
+    <div class="ind-h"><h3>WMSR<span>威廉指标 Williams %R</span></h3></div>
+    <div class="chips"><span class="chip cat">超买超卖</span><span class="chip">常用 14 · 区间 0~−100</span></div>
+    <p class="human">收盘价在近期高低区间的"倒序位置":<b>0 附近=贴着最高价(超买),−100 附近=贴着最低价(超卖)</b>。注意刻度是负的、方向是反的。</p>
+    <div class="chart" id="c-wmsr" tabindex="0" role="img" aria-label="威廉指标超卖回升示例"></div>
+    <div class="legend" data-for="c-wmsr"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>−80 下方<而>回升穿 −80=超卖买点</li>
+        <li>−20 上方回落=超买卖点</li>
+        <li>最快的价格位置传感器,适合小周期择时</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>太敏感,单用它交易会被手续费磨死。它的正确用法是与 KDJ/RSI 互为印证(三者共振=极端更可信),或等它<b>走出超卖区</b>确认拐头。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="vol" id="i-vol">
+    <div class="ind-h"><h3>VOL<span>成交量 Volume</span></h3></div>
+    <div class="chips"><span class="chip cat">量能</span><span class="chip">量MA5 / 换手率</span></div>
+    <p class="human">价格会骗人,量不会——<b>涨要放量、跌要缩量</b>才是健康结构。所有突破都必须有量确认:无量突破=假突破概率大增。</p>
+    <div class="chart" id="c-vol" tabindex="0" role="img" aria-label="成交量与放量突破示例"></div>
+    <div class="legend" data-for="c-vol"></div>
+    <div class="grid2">
+      <div><h4>量价八法(核心四条)</h4><ul>
+        <li>价涨量增=健康上涨,可追</li>
+        <li>价涨量缩=虚涨,随时回落</li>
+        <li>价跌量增=出货/恐慌,回避</li>
+        <li>价跌量缩=抛压衰竭,酝酿反转</li>
+      </ul></div>
+      <div><h4>美股实战</h4><ul>
+        <li>美股开盘/收盘半小时量最大,午盘最薄——<b>盘中无量假信号多</b></li>
+        <li>盘前盘后量小价乱,技术指标基本失效</li>
+        <li>财报日巨量长阴/长阳会重置所有指标,别用它当形态</li>
+      </ul></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="vol" id="i-obv">
+    <div class="ind-h"><h3>OBV<span>能量潮 On-Balance Volume</span></h3></div>
+    <div class="chips"><span class="chip cat">量能·累计</span><span class="chip">无参数</span></div>
+    <p class="human">涨日把成交量加进累计、跌日减掉——把"聪明钱流向"画成一条线。<b>价涨 OBV 涨=真涨;价新高 OBV 不新高=暗中出货</b>。</p>
+    <div class="chart" id="c-obv" tabindex="0" role="img" aria-label="OBV与价格配合示例"></div>
+    <div class="legend" data-for="c-obv"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>OBV 领先或同步于价格创新高=上涨有量支撑</li>
+        <li><b>顶背离:</b>价新高、OBV 波峰走低=主力派发</li>
+        <li><b>底背离:</b>价新低、OBV 拒绝新低=有人在接货</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>分红除权、大盘系统性抛售时 OBV 会失真;小盘股量操纵也会骗它。它确认趋势比抓拐点更靠谱。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="os" id="i-psy">
+    <div class="ind-h"><h3>PSY<span>心理线 Psychological Line</span></h3></div>
+    <div class="chips"><span class="chip cat">情绪</span><span class="chip">常用 12 日</span></div>
+    <p class="human">最近 12 天里上涨天数占比。<b>&gt;75%=过热(追高盘太多),&lt;25%=过冷(恐慌盘占满)</b>——一个纯"情绪温度计"。</p>
+    <div class="chart" id="c-psy" tabindex="0" role="img" aria-label="心理线低位区示例"></div>
+    <div class="legend" data-for="c-psy"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>&lt;25% 后收阳=情绪冰点回暖,反弹概率大</li>
+        <li>&gt;75% 且放量滞涨=获利盘沉重,减仓</li>
+        <li>与 RSI/KDJ 共振时,情绪极端更可信</li>
+      </ul></div>
+      <div><h4>失效场景</h4><p>单边牛里 PSY 能长期 &gt;75(天天涨);熊市阴跌里长期 &lt;25。它是反向指标,只在<b>拐点附近</b>有价值,趋势中途毫无用处。</p></div>
+    </div>
+  </article>
+
+  <article class="card ind" data-cat="wv" id="i-atr">
+    <div class="ind-h"><h3>ATR<span>真实波幅均值 Average True Range</span></h3></div>
+    <div class="chips"><span class="chip cat">波动率·风控</span><span class="chip">参数 14</span></div>
+    <p class="human">每天"真实折腾幅度"(含跳空)的平均值。<b>它不告诉你方向,告诉你止损该放多远、仓位该开多小</b>——全页最被低估的指标。</p>
+    <div class="chart" id="c-atr" tabindex="0" role="img" aria-label="ATR在突破后放大的示例"></div>
+    <div class="legend" data-for="c-atr"></div>
+    <div class="grid2">
+      <div><h4>怎么用</h4><ul>
+        <li>止损距离 = 2×ATR(自动适应波动的止损)</li>
+        <li>吊灯止盈 = 最高价 − 3×ATR,跟踪锁定利润</li>
+        <li><b>仓位 = 账户×1% ÷ (2×ATR)</b>(海龟公式,工具页有计算器)</li>
+      </ul></div>
+      <div><h4>美股实战</h4><ul>
+        <li>财报、CPI、FOMC 前 ATR 会骤然放大——<b>别在事件前重仓</b></li>
+        <li>高 ATR 的票同样盈利目标也要放大,别拿 1% 的目标扛 4% 的波动</li>
+      </ul></div>
+    </div>
+  </article>
+</section>
+
+<!-- ============ Tab 2 策略 ============ -->
+<section class="tab" id="t-cl">
+  <div class="card hero">
+    <h2>多指标联合判断<br>四类共振,一套流程</h2>
+    <p style="margin-top:8px">指标分四类:<b style="color:var(--up)">方向(均线/MACD/DMI)</b>、<b style="color:var(--tint)">强度(ADX/BOLL带宽)</b>、<b style="color:var(--s4)">时机(KDJ/RSI/九转/触轨)</b>、<b style="color:var(--s3)">确认(量/OBV/PSY)</b>。同类指标说一样的话不算共振,<b>跨类同时说多头才是信号</b>。</p>
+  </div>
+
+  <div class="card">
+    <h2 class="sec" style="font-size:19px">总流程:先问路况,再选武器</h2>
+    <div class="flow">
+      <div class="step"><div class="no">1</div><div class="bd"><b>定市况 — ADX / BOLL 带宽</b><p>ADX&gt;25 或带宽开口=趋势市;ADX&lt;20 且带收口=震荡市。这一步决定你后面信谁。</p></div></div>
+      <div class="step"><div class="no">2</div><div class="bd"><b>定方向 — 均线结构 + MACD 零轴 + ±DI</b><p>MA20 与 MA60 的排列、价格与 SMA200 的关系,给出行情的多空底色。</p></div></div>
+      <div class="step"><div class="no">3</div><div class="bd"><b>等时机 — KDJ / RSI / 九转 / BOLL 触轨</b><p>方向对了不追价:等回调到关键位、超卖修复或九转衰竭,进可攻退可守的位置。</p></div></div>
+      <div class="step"><div class="no">4</div><div class="bd"><b>要确认 — VOL / OBV / PSY</b><p>上涨要量配合、OBV 同步新高、情绪未到极端。量价不配合=信号打对折。</p></div></div>
+      <div class="step"><div class="no">5</div><div class="bd"><b>去执行 — ATR 止损 + 仓位公式</b><p>入场前先写好止损价与股数(工具页计算器)。没有止损的单子不叫交易,叫祈祷。</p></div></div>
+    </div>
+  </div>
+
+  <article class="card">
+    <h3 class="strat">策略 A · 趋势多头共振<span class="L">顺势做多</span></h3>
+    <p class="sub">右侧交易:不抄最低点,买"确认后的继续"。适合 ADX&gt;20 的趋势市。</p>
+    <div class="chart" id="c-sa" tabindex="0" role="img" aria-label="策略A示例:回踩MA20入场"></div>
+    <div class="legend" data-for="c-sa"></div>
+    <h4 style="margin-top:14px">入场条件(满足≥4项,第1条必选)</h4>
+    <div class="sig">
+      <div class="box long"><b>① 趋势结构(必选)</b><p>收盘价&gt;MA20&gt;MA60,MA20 向上;加分:价在 SMA200 上方</p></div>
+      <div class="box long"><b>② 动量方向</b><p>MACD:DIF&gt;DEA 且柱状在零轴上方放大;RSI 在 40~65 强势区</p></div>
+      <div class="box long"><b>③ 趋势强度</b><p>+DI&gt;−DI 且 ADX≥20 并走高</p></div>
+      <div class="box long"><b>④ 量价确认</b><p>回调缩量(量&lt;量MA5),OBV 未跌破前低;突破日放量</p></div>
+    </div>
+    <div class="rule"><b>入场:</b>条件齐备后,等回踩 MA20 企稳收阳再进,不追离均线&gt;2×ATR 的急涨。<br><b>止损:</b>入场价 − 2×ATR,或收盘破 MA20(先到为准)。<br><b>止盈:</b>吊灯跟踪(最高价−3×ATR);跌破 MA20 减半,破 MA60 清仓。<br><b>仓位:</b>股数 = 账户×1% ÷ (2×ATR),单笔风险永远≤1%。</div>
+    <div class="grid2"><div><h4>失效场景</h4><p>财报跳空、突发加息直接击穿止损位(美股隔夜风险);ADX&lt;20 的假趋势反复触发止损。</p></div>
+    <div><h4>纪律</h4><p>被止损后趋势重新满足条件,可以再进——<b>趋势策略的胜率约 4~5 成,赚的是盈亏比</b>,怕止损就别做趋势。</p></div></div>
+  </article>
+
+  <article class="card">
+    <h3 class="strat">策略 B · 极端超卖反转<span class="L">左侧抄底</span></h3>
+    <p class="sub">均值回归:买"跌过头的回归",只在震荡市或上升趋势的回调里做。<b>下降主趋势里"超卖还能更超卖"。</b></p>
+    <div class="chart" id="c-sb" tabindex="0" role="img" aria-label="策略B示例:七项共振与九转9"></div>
+    <div class="legend" data-for="c-sb"></div>
+    <h4 style="margin-top:14px">七项共振清单(满足≥5项才出手)</h4>
+    <div class="sig">
+      <div class="box long"><b>① 价格</b><p>触及或跌破 BOLL 下轨(2σ 极端)</p></div>
+      <div class="box long"><b>② RSI&lt;30</b><p>进入统计意义上的超卖区</p></div>
+      <div class="box long"><b>③ KDJ:J&lt;0 或 K&lt;20</b><p>恐慌抛售的量化特征</p></div>
+      <div class="box long"><b>④ W%R&lt;−80 且 CCI&lt;−100</b><p>位置类指标同向极端</p></div>
+      <div class="box long"><b>⑤ PSY&lt;25%</b><p>上涨天数占比冰点</p></div>
+      <div class="box long"><b>⑥ 神奇九转 出现"9"</b><p>下跌动能衰竭计数</p></div>
+      <div class="box long"><b>⑦ MACD 底背离 / OBV 不创新低</b><p>聪明钱不再卖(加分大项)</p></div>
+    </div>
+    <div class="rule"><b>入场:</b>共振达标后,等<b>阳线收盘</b>或 KDJ 低位金叉再买——绝不接下落的刀。<br><b>止损:</b>最低点 − 1×ATR,破位无条件走。<br><b>止盈:</b>第一目标 BOLL 中轨(减半仓),第二目标上轨。<br><b>仓位:</b>抄底仓位减半(风险 0.5%),因为左侧胜率天然低。</div>
+    <div class="grid2"><div><h4>失效场景</h4><p>财报暴雷、退市风险股的下跌没有"超卖"概念;熊市主跌浪里七项共振可以天天达标(所以必须先看策略A的趋势条件排除主跌浪)。</p></div>
+    <div><h4>为什么等阳线</h4><p>七项共振只说明"该反弹了",阳线说明"开始反弹了"。左侧条件+右侧确认,胜率立涨。</p></div></div>
+  </article>
+
+  <article class="card">
+    <h3 class="strat">策略 C · 空头趋势做空<span class="S">顺势做空</span></h3>
+    <p class="sub">策略 A 的镜像:趋势转空后,在<b>弱反弹衰竭处</b>做空,不在暴跌中追空。</p>
+    <div class="chart" id="c-sc" tabindex="0" role="img" aria-label="策略C示例:反弹至均线压力做空"></div>
+    <div class="legend" data-for="c-sc"></div>
+    <div class="sig">
+      <div class="box short"><b>① 趋势结构(必选)</b><p>MA20&lt;MA60,价格&lt;SMA200;反弹至 MA20/MA60 一带受阻</p></div>
+      <div class="box short"><b>② 动量</b><p>MACD 零轴下方死叉或顶背离;RSI 反弹不过 60 回落</p></div>
+      <div class="box short"><b>③ 强度</b><p>−DI&gt;+DI 且 ADX 走高</p></div>
+      <div class="box short"><b>④ 量价</b><p>反弹缩量(弱反弹),OBV 反弹不创新高</p></div>
+    </div>
+    <div class="rule"><b>入场:</b>反弹出现阴包阳 / 九转卖出9 / BOLL 上轨受阻回落时进空。<br><b>止损:</b>反弹高点 + 1.5×ATR。<br><b>止盈:</b>前低或 2R,分批平。<br><b>美股做空成本提醒:</b>融券有利息、低流通股有逼空(short squeeze)风险、损益无限——<b>仓位再减半</b>。</div>
+  </article>
+
+  <article class="card">
+    <h3 class="strat">背离专题<span class="N">拐点的先行信号</span></h3>
+    <p class="sub">价格与指标"说不一样的话":价新低而 RSI/MACD 不新低=底背离;价新高而指标不新高=顶背离。下图三条竖线对齐看:价格创新低,RSI 与 MACD 的低点却在抬高。</p>
+    <div class="chart" id="c-div" tabindex="0" role="img" aria-label="底背离:价格新低RSI与MACD抬高"></div>
+    <div class="legend" data-for="c-div"></div>
+    <div class="grid2">
+      <div><h4>怎么看</h4><ul>
+        <li>背离说明"减速",不是"立刻反转"——<b>必须等右侧确认</b>(金叉/阳线)</li>
+        <li>两重、三重连续背离的力量更强</li>
+        <li>RSI 背离最灵敏,MACD 背离最扎实,OBV 背离看主力</li>
+      </ul></div>
+      <div><h4>常见误读</h4><p>强趋势里能背离再背离(顶背离后继续涨);背离对象必须取<b>相邻的两个同向极值</b>,隔着半年的两个低点不构成背离。</p></div>
+    </div>
+  </article>
+
+  <article class="card">
+    <h3 class="strat">多空共振计分器<span class="N">打分定仓位</span></h3>
+    <p class="sub">对照你的持仓/标的,把成立的条件点亮——跨类别共振度实时打分(满分±100)。</p>
+    <div id="scorer"></div>
+    <div id="scoreBar"><div id="scoreFill" style="left:50%;width:0"></div></div>
+    <div style="display:flex;align-items:baseline;gap:12px"><span id="scoreNum">0</span><span id="scoreVerdict">观望 · 条件不足</span></div>
+    <ul id="scoreActs"></ul>
+  </article>
+</section>
+
+<!-- ============ Tab 3 工具 ============ -->
+<section class="tab" id="t-gj">
+  <div class="card">
+    <h2 class="sec" style="font-size:19px">ATR 仓位 & 止损计算器</h2>
+    <p class="sub">海龟法则:单笔亏损锁定在账户的 1%,止损距离由 ATR 决定,股数倒推出来——<b>先算风险,再谈梦想</b>。</p>
+    <div class="inp-row"><label>账户金额 ($)</label><input id="in-acct" type="number" inputmode="decimal" value="10000"></div>
+    <div class="inp-row"><label>单笔风险 (%,建议 0.5~1)</label><input id="in-risk" type="number" inputmode="decimal" value="1" step="0.1"></div>
+    <div class="inp-row"><label>方向</label><div class="seg" style="margin:0;flex:none;width:150px"><button id="dirL" class="on" style="color:var(--up)">做多</button><button id="dirS" style="color:var(--dn)">做空</button></div></div>
+    <div class="inp-row"><label>入场价 ($)</label><input id="in-px" type="number" inputmode="decimal" value="100" step="0.01"></div>
+    <div class="inp-row"><label>ATR ($,行情软件可查)</label><input id="in-atr" type="number" inputmode="decimal" value="2.5" step="0.01"></div>
+    <div class="inp-row"><label>止损 = ×ATR (常用 1.5~2.5)</label><input id="in-k" type="number" inputmode="decimal" value="2" step="0.1"></div>
+    <div class="tiles">
+      <div class="tile"><div class="l">止损价</div><div class="v" id="o-stop">—</div></div>
+      <div class="tile"><div class="l">每股风险</div><div class="v" id="o-risk">—</div></div>
+      <div class="tile hl"><div class="l">建议股数</div><div class="v" id="o-shares">—</div></div>
+      <div class="tile"><div class="l">仓位市值 / 占账户</div><div class="v" id="o-pos">—</div></div>
+      <div class="tile"><div class="l">2R 止盈(翻倍风险)</div><div class="v" id="o-t2">—</div></div>
+      <div class="tile"><div class="l">3R 止盈</div><div class="v" id="o-t3">—</div></div>
+    </div>
+    <p class="kv" style="margin-top:10px">公式:止损距离=k×ATR;股数=floor(账户×风险% ÷ 止损距离);R=止损距离,2R/3R 即以风险为尺度的盈亏比目标。</p>
+  </div>
+
+  <div class="card">
+    <h2 class="sec" style="font-size:19px">信号阈值速查表</h2>
+    <p class="sub">盘中对照用:<b>看多</b>/<b>看空</b>触发条件与主要失效场景。</p>
+    <div class="qtable"><table>
+      <thead><tr><th>指标</th><th>看多信号</th><th>看空信号</th><th>主要失效场景</th></tr></thead>
+      <tbody>
+        <tr><td>MA</td><td><b>多头排列;回踩 MA20 企稳;50上穿200金叉</b></td><td><i>空头排列;跌破 SMA200</i></td><td>震荡市缠绕;跳空缺口</td></tr>
+        <tr><td>EMA</td><td><b>价在 EMA21 上,回踩不破</b></td><td><i>跌破 EMA21 且反抽受阻</i></td><td>噪声多,震荡市反复穿越</td></tr>
+        <tr><td>SAR</td><td><b>点在价下且价创新高</b></td><td><i>点翻上价=离场/反手</i></td><td>震荡市反复翻转</td></tr>
+        <tr><td>BOLL</td><td><b>收口后放量突破;下轨超卖回升</b></td><td><i>上轨滞涨回落;开口向下</i></td><td>单边贴轨行情</td></tr>
+        <tr><td>九转</td><td><b>下跌计数 9 + 阳线确认</b></td><td><i>上涨计数 9</i></td><td>单边能数到13+;逆势本质</td></tr>
+        <tr><td>MACD</td><td><b>零上金叉;底背离;柱由缩转放</b></td><td><i>零下死叉;顶背离</i></td><td>震荡市零轴缠绕</td></tr>
+        <tr><td>DMI</td><td><b>+DI&gt;−DI 且 ADX≥20 走高</b></td><td><i>−DI&gt;+DI 且 ADX 走高</i></td><td>趋势初期 ADX 滞后</td></tr>
+        <tr><td>RSI</td><td><b>&lt;30 后回升穿30;40~65强势区;底背离</b></td><td><i>&gt;70 死叉回落;顶背离</i></td><td>强势钝化(贴80走)</td></tr>
+        <tr><td>KDJ</td><td><b>&lt;20 低位金叉</b></td><td><i>&gt;80 高位死叉</i></td><td>趋势市长期钝化</td></tr>
+        <tr><td>CCI</td><td><b>−100 下回升穿 −100</b></td><td><i>+100 上回落穿 +100</i></td><td>无界限,极端可持续</td></tr>
+        <tr><td>WMSR</td><td><b>−80 下回升穿 −80</b></td><td><i>−20 上回落</i></td><td>过于敏感,须共振</td></tr>
+        <tr><td>VOL</td><td><b>涨放量、突破放量</b></td><td><i>涨缩量、跌放量</i></td><td>盘前盘后量失真</td></tr>
+        <tr><td>OBV</td><td><b>同步新高;价新低OBV不新低</b></td><td><i>价新高OBV不新高</i></td><td>除权/系统性抛售失真</td></tr>
+        <tr><td>PSY</td><td><b>&lt;25% 后收阳</b></td><td><i>&gt;75% 滞涨</i></td><td>单边行情长期极端</td></tr>
+        <tr><td>ATR</td><td colspan="2" style="text-align:center">不判方向 — 定止损(2×ATR)与仓位(1%法则)</td><td>财报日骤变</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============ Tab 4 速查 ============ -->
+<section class="tab" id="t-sc">
+  <div class="card">
+    <h2 class="sec" style="font-size:19px">十条交易纪律</h2>
+    <ol class="disc">
+      <li><b>先定市况再选指标:</b>ADX&gt;25 用趋势策略,&lt;20 用震荡策略,永远不混用。</li>
+      <li><b>跨类共振才出手:</b>方向+强度+时机+确认,至少三类点头;同类三个指标说一样的话只算一票。</li>
+      <li><b>无止损不下单:</b>入场价、止损价、股数三件事在下单前同时确定(工具页算好)。</li>
+      <li><b>仓位由 ATR 决定,</b>不是由感觉决定;单笔风险≤1%,抄底/做空减半。</li>
+      <li><b>财报/议息前减仓:</b>事件跳空会直接越过止损位,技术分析对缺口无效。</li>
+      <li><b>跳空缺口毁灭技术位:</b>隔夜美股 gap 频繁,留隔夜仓前想清楚缺口方向不利时你承受多少。</li>
+      <li><b>不逆 ADX&gt;30 的趋势做反转:</b>超买可以更超买,九转之后还有十三转。</li>
+      <li><b>盘前盘后信号不可信:</b>量薄、价乱、指标失真,只在常规交易时段确认信号。</li>
+      <li><b>大周期定方向,小周期找买卖点:</b>周线看趋势,日线找形态,小时线精进入场。</li>
+      <li><b>亏损单绝不加仓摊平:</b>摊平=让单笔风险失控,止损认错是成本,不是失败。</li>
+    </ol>
+  </div>
+  <div class="card">
+    <h2 class="sec" style="font-size:19px">常见问题</h2>
+    <div class="grid2">
+      <div><h4>不同软件指标数值为何不一样?</h4><p>参数默认值(MA 用 50/200 还是 10/20/60)、复权方式、MACD 柱是否×2、RSI 用 Wilder 还是 Cutler 算法都会造成差异。信号看形态与相对位置,别纠结小数点。</p></div>
+      <div><h4>日线和周线怎么配合?</h4><p>周线定方向(周 MACD、周均线排列),日线等回调与信号,小时线精细入场。小周期服从大周期。</p></div>
+      <div><h4>美股为什么这么多跳空?</h4><p>盘后财报、盘前经济数据都在闭市时释放,开盘一次性定价。应对:财报周降杠杆、缺口后等回补或重设止损,不把缺口当形态。</p></div>
+      <div><h4>指标都失灵的时候怎么办?</h4><p>系统性事件(危机、政策突变)时所有基于历史的指标集体失效,唯一有效的是仓位与现金。活下来比做对重要。</p></div>
+    </div>
+  </div>
+  <div class="warn"><b>免责声明:</b>本页为技术分析教学与工具演示,K线为程序模拟数据,不构成任何投资建议。美股有杠杆账户归零、融券爆仓等风险,入市决策与盈亏由你自己负责。</div>
+</section>
+
+</main>
+
+<footer>美股技术指标图鉴 · 图表由浏览器实时计算绘制 · 教学用途,不构成投资建议</footer>
+
+<nav class="tabs" aria-label="主导航">
+  <button data-t="t-tj" class="on"><svg viewBox="0 0 24 24"><path d="M3 20h18M6 16v-5m5 5V7m5 9v-8"/></svg>图鉴</button>
+  <button data-t="t-cl"><svg viewBox="0 0 24 24"><path d="M4 19V5a1 1 0 011-1h14a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1zM8 8h8M8 12h5"/></svg>策略</button>
+  <button data-t="t-gj"><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8M8 11h3m-3 4h3m5-4v8"/></svg>工具</button>
+  <button data-t="t-sc"><svg viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 011 1v16l-3-2-3 2-3-2-3 2-1-1V4a1 1 0 011-1z"/><path d="M9 8h6M9 12h6"/></svg>速查</button>
+</nav>
+
+<script src="./chart.js"></script>
+<script src="./app.js"></script>
+</body>
+</html>

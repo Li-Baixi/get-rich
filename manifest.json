@@ -1,0 +1,15 @@
+{
+  "name": "美股技术指标图鉴",
+  "short_name": "指标图鉴",
+  "description": "MA EMA SAR BOLL 神奇九转 MACD DMI RSI KDJ CCI WMSR VOL OBV PSY ATR 图解与多指标共振策略",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
